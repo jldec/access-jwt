@@ -6,7 +6,8 @@ Depends on [@tsndr/cloudflare-worker-jwt](https://github.com/tsndr/cloudflare-wo
 
 ### Example endpoint
 https://access-jwt.jldec.me/
-![Screenshot 2024-08-13 at 18 44 30](https://github.com/user-attachments/assets/d697014b-ec5e-4c35-a394-1a521b973d0d)
+
+![Screenshot 2024-08-13 at 18 55 54](https://github.com/user-attachments/assets/443cb4c0-13e3-410f-8629-1c0d31b7d587)
 
 ### To deploy on your own Cloudflare Access protected endpoint
 
