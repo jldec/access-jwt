@@ -1,10 +1,6 @@
 name = "access-jwt"
 main = "src/index.js"
-compatibility_date = "2024-03-07"
-workers_dev = true
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_date = "2024-08-13"
 
-[[routes]]
-pattern = "access-jwt.jldec.me"
-zone_name = "jldec.me"
-custom_domain = true
+[vars]
+ACCESS_TEAM_NAME = "haydn"

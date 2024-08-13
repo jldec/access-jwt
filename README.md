@@ -1,30 +1,16 @@
 # access-jwt
 
-```js
-export default {
-	async fetch(request) {
-		const echo = {
-			cf: request.cf,
-			headers: Object.fromEntries(request.headers)
-		}
-		return new Response(JSON.stringify(echo,null,2), {
-			headers: {
-				"content-type": "application/json",
-			},
-		});
-	},
-};
-```
-- Deploy simple echo worker with the code above - I used the name `access-jwt`
-- In worker settings > triggers, configure custom domain e.g. `access-jwt.jldec.me`
-- Create a Zero Trust Access application on the same subdomain with a policy to allow everyone
-- Login to the subdomain with your browser
-- Worker requet headers should now include `cf-access-jwt-assertion header` and `cf-access-authenticated-user-email`
-- According to [this post](https://community.cloudflare.com/t/securing-a-single-page-application-spa-behind-cloudflare-access/210484), these headers should not be spoofable.
+Cloudflare Worker to decode and validate [Cloudflare Access JWT tokens](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json).
 
-- import code from playground
-  `pnpm create cloudflare access-jwt --existing-script access-jwt`
+Depends on [@tsndr/cloudflare-worker-jwt](https://github.com/tsndr/cloudflare-worker-jwt)
 
+### Example endpoint
+https://access-jwt.jldec.me/
 
+### To deploy on your own Cloudflare Access protected endpoint
 
+- Modify `wrangler.toml` to use your own Cloudflare Access team name. This is required in order to fetch public keys from `https://${env.ACCESS_TEAM_NAME}.cloudflareaccess.com/cdn-cgi/access/certs`. _The team name can be found in the Custom Pages settings of the Cloudflare [Zero Trust dashboard](https://one.dash.cloudflare.com)._
 
+- Run `pnpm install` and `pnpm run deploy`
+- Configure the deployed worker to trigger on your endpoint
+- Open the endpoint and authenticate with your browser

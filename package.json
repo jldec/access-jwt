@@ -1,13 +1,22 @@
 {
-  "name": "access-jwt",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "start": "wrangler dev"
-  },
-  "devDependencies": {
-    "wrangler": "^3.60.3"
-  }
+	"name": "access-jwt",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev"
+	},
+	"dependencies": {
+		"@tsndr/cloudflare-worker-jwt": "^2.5.3"
+	},
+	"devDependencies": {
+		"wrangler": "^3.70.0"
+	},
+	"prettier": {
+		"semi": false,
+		"singleQuote": true,
+    "trailingComma": "none",
+		"printWidth": 100
+	}
 }
