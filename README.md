@@ -4,9 +4,11 @@ Example Cloudflare Worker to decode and validate [Cloudflare Access JWT tokens](
 
 Depends on [@tsndr/cloudflare-worker-jwt](https://github.com/tsndr/cloudflare-worker-jwt)
 
-Fetches public keys from `https://${env.ACCESS_TEAM_NAME}.cloudflareaccess.com/cdn-cgi/access/certs`. The team name can be found in the Custom Pages settings of the Cloudflare [Zero Trust dashboard](https://one.dash.cloudflare.com).
+Fetches public keys from `https://${env.ACCESS_TEAM_NAME}.cloudflareaccess.com/cdn-cgi/access/certs`.  
+The team name can be found in the Custom Pages settings of the Cloudflare [Zero Trust dashboard](https://one.dash.cloudflare.com).
 
-Motivated by [this thread](https://x.com/adam_janis/status/1823330661140181204) by Adam Janiš. See[Alternative implmentation](https://gist.github.com/eidam/7fb298196a43b2c172245219c6dd7da1) using [honojs](https://hono.dev/) middleware and [jose](https://github.com/panva/jose).
+Originally motivated by [this thread](https://x.com/adam_janis/status/1823330661140181204) by [Adam Janiš](https://github.com/eidam).  
+See [Alternative implmentation](https://gist.github.com/eidam/7fb298196a43b2c172245219c6dd7da1) using [honojs](https://hono.dev/) middleware and [jose](https://github.com/panva/jose).
 
 ### Example endpoint
 https://access-jwt.jldec.me/
@@ -18,9 +20,7 @@ https://access-jwt.jldec.me/
 - Configure the deployed worker to trigger on your endpoint.
 - Open the endpoint and authenticate with your browser.
 
-#### Possible improvements
-_Issues and PRs welcome_
-
+### Possible improvements
 - [ ] Tests
 - [ ] TypeScript
 - [ ] Mock jwt and keys for local use
