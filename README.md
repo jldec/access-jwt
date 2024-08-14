@@ -8,7 +8,7 @@ Fetches public keys from `https://${env.ACCESS_TEAM_NAME}.cloudflareaccess.com/c
 The team name can be found in the Custom Pages settings of the Cloudflare [Zero Trust dashboard](https://one.dash.cloudflare.com).
 
 Originally motivated by [this thread](https://x.com/adam_janis/status/1823330661140181204) by [Adam Janiš](https://github.com/eidam).  
-See [Alternative implmentation](https://gist.github.com/eidam/7fb298196a43b2c172245219c6dd7da1) using [hono](https://hono.dev/) middleware and [jose](https://github.com/panva/jose).
+See [Alternative implementation](https://gist.github.com/eidam/7fb298196a43b2c172245219c6dd7da1) using [hono](https://hono.dev/) middleware and [jose](https://github.com/panva/jose).
 
 ### Example endpoint
 https://access-jwt.jldec.me/
