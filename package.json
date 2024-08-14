@@ -11,9 +11,11 @@
 		"@tsndr/cloudflare-worker-jwt": "^2.5.3"
 	},
 	"devDependencies": {
-		"wrangler": "^3.70.0"
+		"wrangler": "^3.71.0"
 	},
 	"prettier": {
+		"useTabs": true,
+		"tabWidth": 2,
 		"semi": false,
 		"singleQuote": true,
     "trailingComma": "none",
