@@ -4,7 +4,9 @@ Example Cloudflare worker to decode and validate [Cloudflare Access JWT tokens](
 
 Depends on [@tsndr/cloudflare-worker-jwt](https://github.com/tsndr/cloudflare-worker-jwt)
 
-[The code](https://github.com/jldec/access-jwt/blob/main/src/index.js#L9-L26) fetches public keys from `https://${env.ACCESS_TEAM_NAME}.cloudflareaccess.com/cdn-cgi/access/certs`. Your team name can be found in the Custom Pages settings of the Cloudflare [Zero Trust dashboard](https://one.dash.cloudflare.com).
+[The code](https://github.com/jldec/access-jwt/blob/main/src/index.js#L10-L43) fetches public keys from `https://${env.ACCESS_TEAM_NAME}.cloudflareaccess.com/cdn-cgi/access/certs`. Your team name can be found in the Custom Pages settings of the Cloudflare [Zero Trust dashboard](https://one.dash.cloudflare.com).
+
+By decoding the JWT from the `CF_Authorization` cookie instead of relying on the `cf-access-jwt-assertion` header, you can continue identifying authenticated users even for un-authed routes on the same origin, once they have logged in. This works because the cookie is scoped to the hostname unless you explicitly configure Access to scope the cooking to the application path.
 
 Originally motivated by [this thread](https://x.com/adam_janis/status/1823330661140181204) by [Adam Janiš](https://github.com/eidam).  
 [Alternative implementation](https://gist.github.com/eidam/7fb298196a43b2c172245219c6dd7da1) using [hono](https://hono.dev/) middleware and [jose](https://github.com/panva/jose).

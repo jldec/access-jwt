@@ -5,11 +5,28 @@ let publicKeysMemo = null
 
 export default {
 	async fetch(request, env) {
+		let responseObject = {}
 		try {
 			const publicKeys = await fetchPublicKeys()
 
-			const jwt = request.headers.get('cf-access-jwt-assertion')
-			if (!jwt) throw new Error('No cf-access-jwt-assertion header')
+			let jwt = request.headers.get('cf-access-jwt-assertion')
+			let from = 'header'
+
+			// try using CF_Authorization cookie instead of header
+			if (!jwt) {
+				const cookies = request.headers.get('cookie')
+				if (cookies) {
+					const cfAuthCookie = cookies
+						.split(';')
+						.find((c) => c.trim().startsWith('CF_Authorization='))
+					if (cfAuthCookie) {
+						jwt = cfAuthCookie.split('=')[1].trim()
+						from = 'cookie'
+					}
+				}
+			}
+
+			if (!jwt) throw new Error('No cf-access-jwt-assertion header or CF_Authorization cookie')
 
 			const decodedJwt = await decode(jwt)
 
@@ -25,8 +42,9 @@ export default {
 				}
 			}
 
-			const responseObject = {
+			responseObject = {
 				jwt,
+				from,
 				verified,
 				decodedJwt,
 				publicKeys,
@@ -34,15 +52,19 @@ export default {
 				requestHeaders: Object.fromEntries(request.headers),
 				cf: request.cf
 			}
-
-			return new Response(JSON.stringify(responseObject, null, 2), {
-				headers: {
-					'content-type': 'application/json;charset=utf-8'
-				}
-			})
 		} catch (e) {
-			return new Response(e.stack, { status: 500 })
+			responseObject = {
+				error: e.message,
+				requestHeaders: Object.fromEntries(request.headers),
+				cf: request.cf
+			}
 		}
+
+		return new Response(JSON.stringify(responseObject, null, 2), {
+			headers: {
+				'content-type': 'application/json;charset=utf-8'
+			}
+		})
 
 		// get public keys from Cloudflare
 		// https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/#access-signing-keys
