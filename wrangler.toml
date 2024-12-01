@@ -2,5 +2,33 @@ name = "access-jwt"
 main = "src/index.js"
 compatibility_date = "2024-11-12"
 
-[vars]
-ACCESS_TEAM_NAME = "jldec"
+[observability]
+enabled = true
+
+# secrets
+# CLOUDFLARE_ACCESS_PUBLIC_KEYS
+# CLOUDFLARE_ACCESS_TEAM_NAME
+# CLOUDFLARE_ACCOUNT_ID
+# CLOUDFLARE_API_TOKEN
+# CLOUDFLARE_WORKER_NAME
+#
+# https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/
+# public keys fetched once a week with a cron worker from
+# https://${CLOUDFLARE_ACCESS_TEAM_NAME}.cloudflareaccess.com/cdn-cgi/access/certs
+# and cached in CLOUDFLARE_ACCESS_PUBLIC_KEYS secret on this worker using api
+#
+# curl
+# -X PUT
+# -d @.secret.json
+# -H "Content-Type: application/json"
+# -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+# https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${CLOUDFLARE_WORKER_NAME}/secrets
+# CLOUDFLARE_API_TOKEN must have "Workers Scripts:Edit" permissions
+#
+# .secret.json has the shape:
+# {
+# 	"name": "CLOUDFLARE_ACCESS_PUBLIC_KEYS",
+# 	"text": "<keys-JSON>",
+# 	"type": "secret_text"
+# }
+# where keys-JSON contains the "keys:" property of the object returned from the certs endpoint
