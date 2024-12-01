@@ -96,14 +96,15 @@ export default {
 				throw new Error(
 					`${response.statusText} Error fetching Cloudflare Access public keys from ${keysUrl}`
 				)
-			const publicKeys = await response.json()
-			if (typeof publicKeys !== 'object' || !publicKeys.keys) {
+			const obj = await response.json()
+			if (typeof obj !== 'object' || !obj.keys) {
 				throw new Error(`Malformed Cloudflare Access public keys fetched from ${keysUrl}`)
 			}
+			const publicKeys = obj.keys
 			usingKeys = `fetched from ${keysUrl}`
-			publicKeysMemo = publicKeys.keys
+			publicKeysMemo = publicKeys
 			ctx.waitUntil(putPublicKeys(publicKeys))
-			return publicKeys.keys
+			return publicKeys
 		}
 
 		async function putPublicKeys(publicKeys) {
@@ -117,7 +118,7 @@ export default {
 					},
 					body: JSON.stringify({
 						name: 'CLOUDFLARE_ACCESS_PUBLIC_KEYS',
-						text: JSON.stringify(publicKeys.keys),
+						text: JSON.stringify(publicKeys),
 						type: 'secret_text'
 					})
 				}
